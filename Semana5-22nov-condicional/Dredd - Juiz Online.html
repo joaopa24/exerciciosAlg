@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)https://dredd.dac.ufla.br/testTrials.php#p1668 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Dredd - Juiz Online</title>
+    <link rel="stylesheet" type="text/css" href="./Dredd - Juiz Online_files/jquery-ui-1.9.1.custom.prd.css">
+    <link rel="stylesheet" type="text/css" href="./Dredd - Juiz Online_files/style.css">
+    <link rel="stylesheet" type="text/css" href="./Dredd - Juiz Online_files/formulario.css">
+    <script src="./Dredd - Juiz Online_files/jquery-1.9.0.min.js.transferir"></script>
+    <script src="./Dredd - Juiz Online_files/jquery-ui.min.js.transferir"></script>
+    <script src="./Dredd - Juiz Online_files/jquery.maskedinput.min.js.transferir"></script>
+    <script src="./Dredd - Juiz Online_files/jquery.alphanumeric.js.transferir"></script>
+    <script>
+    $(document).ready(function() {
+        $(document).tooltip();
+        $("button, input[type='submit'], input[type='reset']").button();
+
+        $("input.date").mask("99/99/9999").attr("title","Exemplo: 11/09/2001").tooltip();
+        //~ $("input.datetime").mask("99/99/9999 99:99:99").attr("title","Exemplo: 11/09/2001 10:17:37").tooltip();
+        $("input.datetime").mask("99/99/9999 99:99:99");
+        $("input.integer").numeric().attr("title","Exemplo: 2").tooltip();
+        $("input.number").numeric({allow:"."}).attr("title","Exemplo: 0.5").tooltip();
+        $("textarea").keypress(function(event) {
+            if (event.ctrlKey && (event.which == 112)) {
+                event.preventDefault();
+                $("#data-view-dialog").html("<div class='data-view-box' style='width: 90%;'>"+$(this).val()+"</div>").dialog("open");
+            }
+        });
+
+        $("textarea.cpp-code-view").attr("readonly","readonly");
+        $("div.cpp-code-view").each(function() {
+            var text = $(this).html();
+            text.replace("&","&amp;");
+            text.replace("<","&lt;");
+            text.replace(">","&gt;");
+            text.replace("\r","");
+
+            // Keywords
+            text.replace("float ","<b>float</b> ");
+            text.replace("double ","<b>double</b> ");
+            text.replace("int ","<b>int</b> ");
+            text.replace("long ","<b>long</b> ");
+            text.replace("if ","<b>if</b> ");
+            text.replace("else ","<b>else</b> ");
+            text.replace("for ","<b>for</b> ");
+            text.replace("while ","<b>while</b> ");
+            text.replace("return","<b>return</b>");
+            text.replace("break","<b>break</b>");
+            text.replace("using","<b>using</b>");
+            text.replace("namespace","<b>namespace</b>");
+            text.replace("#include","<b>#include</b>");
+
+            text.replace(" ","&nbsp;");
+            text.replace("\t","&nbsp;&nbsp;&nbsp;&nbsp;");
+            text.replace("\n","<br />");
+            $(this).html(text);
+        });
+
+        $("#alert-dialog").dialog({
+            title: "Aviso",
+            width: "auto",
+            height: "auto",
+            modal: true,
+            buttons: {
+                Ok: function() {
+                    $(this).dialog("close");
+                }
+            }
+        }).dialog("close");
+
+        $("#data-view-dialog").dialog({
+            title: "",
+            width: 800,
+            height: "auto",
+            modal: true,
+            buttons: {
+                Ok: function() {
+                    $(this).dialog("close");
+                }
+            }
+        }).dialog("close");
+    });
+    function openDivAsDialog(id) {
+        $("div#"+id).dialog({
+            title: "",
+            width: "auto",
+            height: "auto",
+            modal: true,
+            buttons: {
+                Ok: function() {
+                    $(this).dialog("close");
+                }
+            }
+        }).dialog("open");
+    };
+    </script>
+</head>
+<body style="zoom: 1;">
+<!--
+    <div id="alert-dialog" style="display:none;box-shadow: #444444;"></div>
+    <div id="data-view-dialog" style="display:none;box-shadow: #444444;text-align:center;"></div>
+-->
+    <div id="topct" class="ui-corner-bottom">
+        <div id="banner">
+            <h1>Dredd - Juiz Online</h1>
+            <div id="topmenu">
+                <a href="https://dredd.dac.ufla.br/" class="button">Principal</a>
+                <a href="https://dredd.dac.ufla.br/profile.php" class="button">Perfil</a>
+                <a href="https://dredd.dac.ufla.br/testsMine.php" class="button">Minhas Provas</a>
+                <a href="https://dredd.dac.ufla.br/logout.php" class="button">Sair</a>
+            </div>
+        </div>
+    </div>
+    <div id="contentct">
+        <div id="content">
+<div id="painel-info">
+    <b>Minutos<br>Restantes</b>:<br>
+    <span id="clock">7635</span><br><br>
+    <b>Usuário</b>:<br>
+    <div id="usuario">João Lucas Pereira de Almeida</div><br>
+    <b>Notas</b>:<br>
+    <span id="notas">
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q1">Q1: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q2">Q2: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q3">Q3: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q4">Q4: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q5">Q5: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q6">Q6: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q7">Q7: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q8">Q8: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q9">Q9: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q10">Q10: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q11">Q11: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q12">Q12: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q13">Q13: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q14">Q14: 100</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q15">Q15: ?</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q16">Q16: ?</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q17">Q17: ?</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q18">Q18: ?</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q19">Q19: ?</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q20">Q20: ?</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q21">Q21: ?</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q22">Q22: ?</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q23">Q23: ?</a><br>
+        <a style="color: #FFF" href="https://dredd.dac.ufla.br/testTrials.php#Q24">Q24: ?</a><br>
+Total: 58    </span><br>
+</div>
+<div id="prova">
+    <h1>Atividade 22 de novembro</h1>
+    <p><b>Prova Aberta Até:</b> 13/12/2022 06:00:00</p>
+    <p><b>Número Máximo de Tentativas:</b> 6</p>
+    <p><b>Atenuação da Nota por Tentativa:</b> 0%</p>
+    <p><b>Instruções para a prova:</b> A prova é individual. Desligue seu celular. Não converse com os colegas. Não fique olhando para a tela dos colegas.</p>
+    <div class="problem-try-ct">
+        <a name="Q1"></a>
+        <h3>Questão 1: Estrutura Condicional - Divisão e Resto</h3>
+        <div class="description-display-box">
+<p>Faça um programa que computa os resultados de uma divisão inteira. Dados um dividendo e um divisor, o programa deve informar o quociente e o resto.</p><p>
+</p><p>Caso não seja possível fazer a divisão, o programa deve escrever <u>erro</u> (letras minúsculas).</p>
+
+<p><b>Entradas:</b></p>
+<ol>
+<li>Um número inteiro que representa o dividendo (numerador).</li>
+<li>Um número inteiro que representa o divisor (denominador).</li>
+</ol>
+
+<p><b>Saídas:</b></p>
+<ol>
+<li>O quociente da divisão.</li>
+<li>O resto da divisão.</li>
+</ol>
+
+
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>15
+7
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>2
+1
+</pre>
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>5
+0
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>erro
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ1"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 22/11/2022 13:19:57</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial192&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial192">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    int numerador, denominador;
+    cin&gt;&gt;numerador&gt;&gt;denominador;
+    
+    if(denominador == 0){
+	  cout&lt;&lt;"erro";
+	} else {
+	  cout&lt;&lt;numerador/denominador&lt;&lt;endl&lt;&lt;numerador%denominador;
+	}
+}
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="192">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="1">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q2"></a>
+        <h3>Questão 2: Estrutura Condicional - Maioridade</h3>
+        <div class="description-display-box">
+<p>Faça um programa que receba a idade de uma pessoa e indique se esta pessoa é ou não maior de idade. Caso a pessoa tenha 18 anos ou mais, o programa deverá exibir a mensagem <b>MAIOR DE IDADE</b>. Caso contrário, o programa deverá exibir no dispositivo de saída padrão a mensagem <b>MENOR DE IDADE</b>. Note que todas as mensagens a serem exibidas devem ser grafadas com letras maiúsculas e todas as palavras das mensagens são separadas por um espaço.</p>
+
+<p><b>Entradas:</b></p>
+<ol>
+<li>Número inteiro que indica a idade de uma pessoa.</li>
+</ol>
+<p><b>Saídas:</b></p>
+<ol>
+<li><b>MAIOR DE IDADE</b> <i>OU</i> <b>MENOR DE IDADE</b>.</li>
+</ol>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>20
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>MAIOR DE IDADE
+</pre>
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>9
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>MENOR DE IDADE
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ2"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 22/11/2022 13:19:50</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial428&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial428">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    int idade;
+    cin&gt;&gt;idade;
+    
+    if(idade &gt;= 18){
+	 cout&lt;&lt;"MAIOR DE IDADE";
+	} else {
+	 cout&lt;&lt;"MENOR DE IDADE";    
+	}
+    return 0;
+}
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="428">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="2">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q3"></a>
+        <h3>Questão 3: Estrutura Condicional - Ano Bissexto</h3>
+        <div class="description-display-box">
+<p>Faça um programa que receba um ano. Se o ano for bissexto, o programa deve escrever <b>1</b>. Se não for, o programa deve escrever <b>0</b>.
+</p><p>Todos os anos múltiplos de 400 são bissextos. Dentre os outros, são bissextos todos os anos múltiplos de 4 que não são múltiplos de 100. Todos os demais não são bissextos.</p>
+
+<p><b>Exemplo de entrada:</b></p>
+<pre>1996</pre>
+<p><b>Exemplo de saída:</b></p>
+<pre>1</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ3"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 22/11/2022 13:53:11</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial106&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial106">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    int a;
+    cin&gt;&gt;a;
+    if(a%400 == 0 or (a%4 == 0 and a%100 != 0)){
+	  cout&lt;&lt;1;
+	} else {
+	  cout&lt;&lt;0;
+	}
+    return 0;
+}
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="106">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="3">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q4"></a>
+        <h3>Questão 4: Estrutura Condicional - Conta por Ângulo</h3>
+        <div class="description-display-box">
+<p>No plano cartesiano, considere um segmento de reta que tem origem no ponto (0,0) e forma um ângulo h (em graus) com a abscissa (eixo horizontal).
+Faça um programa que leia o valor do ângulo h (número inteiro positivo) e dois valores X e Y (números reais, um em cada linha). Em seguida, faça um dos cálculos abaixo, dependendo de qual quadrante o segmento de reta se encontra.</p>
+<ul>
+<li>Primeiro quadrante: calcule a soma de X e Y.</li>
+<li>Segundo quadrante: calcule o produto de X por Y.</li>
+<li>Terceiro quadrante: calcule o quociente da divisão de X por Y.</li>
+<li>Quarto quadrante: calcule o valor de X elevado a Y.</li>
+</ul>
+<p>Observe que o ângulo pode ser maior do que 360 graus, correspondendo a mais de uma volta no círculo trigonométrico. Nesses casos, será necessário reduzir o ângulo à primeira volta (entre 0 e 360 graus) para se descobrir o quadrante. Além disso, considere que o segmento de reta nunca coincidirá com os eixos do plano cartesiano.</p>
+<p>Entradas:</p>
+<ol>
+<li>O valor de h (número inteiro positivo).</li>
+<li>O valor de X (número real).</li>
+<li>O valor de Y (número real).</li>
+</ol>
+<p>Saídas:</p>
+<ol>
+<li>O resultado do cálculo que depende da posição do segmento de reta no plano cartesiano.</li>
+</ol>
+<p>Exemplo de Entrada:</p>
+<pre>375
+3.5
+5.5
+</pre>
+<p>Exemplo de Saída:</p>
+<pre>9.0</pre>
+<p>Exemplo de Entrada:</p>
+<pre>2090
+5
+2
+</pre>
+<p>Exemplo de Saída:</p>
+<pre>25.0</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ4"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 22/11/2022 13:56:41</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial1438&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial1438">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+#include &lt;iomanip&gt;
+
+using namespace std;
+
+int main()
+{
+    int grau;
+    float x,y,result;
+    cin&gt;&gt;grau&gt;&gt;x&gt;&gt;y;
+    
+    if(grau &gt; 360){
+	    grau = grau % 360;
+	}
+    
+    if(grau &gt; 0 and grau &lt; 90){
+	   result = (float) x + y;
+	   cout&lt;&lt;setprecision(1)&lt;&lt;fixed&lt;&lt;result;
+	} else if (grau &gt; 90 and grau &lt; 180){
+	   result = x * y;
+	   cout&lt;&lt;setprecision(1)&lt;&lt;fixed&lt;&lt;result;
+	} else if (grau &gt; 180 and grau &lt; 270){
+	   result = (float) x / y;
+	   cout&lt;&lt;setprecision(1)&lt;&lt;fixed&lt;&lt;result;
+	} else {
+	   result = pow(x,y);
+	   cout&lt;&lt;setprecision(1)&lt;&lt;fixed&lt;&lt;result;
+	}
+    return 0;
+}
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="1438">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="4">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q5"></a>
+        <h3>Questão 5: Estrutura Condicional - Operações Aritméticas</h3>
+        <div class="description-display-box">
+<p>Faça um programa que receba como entrada dois números em ponto flutuante, representando os operandos A e B de uma expressão aritmética a ser definida. Após receber os valores de A e B, seu programa deverá receber um número inteiro X compreendido no intervalo [1,4] que indicará uma determinada operação aritmética a ser computada. Os dados de entrada serão fornecidos em linhas diferentes. Seu programa deverá calcular a operação aritmética indicada por X e exibir no dispositivo de saída padrão o resultado da mesma. As operações aritméticas definidas por X são indicadas na relação a seguir:</p>
+
+<p><b>Obs. Python:</b> para soluções em Python, assuma que números em ponto flutuante com precisão dupla são os números em ponto flutuante tradicionais, ou seja, números em <b>float</b>. </p>
+<p><b>Obs. C/C++:</b> para soluções em C ou C++, assuma que números em ponto flutuante com precisão dupla são obtidos utilizando <b>double</b>. </p>
+<table>
+<tbody><tr>
+<td> <b>Escolha do Usuário (X)</b></td>
+<td> <b>Operação</b> </td>
+</tr>
+<tr>
+<td> 1 </td>
+<td> Média entre os números digitados </td>
+</tr>
+<tr>
+<td> 2 </td>
+<td> Subtrair o menor número do maior </td>
+</tr>
+<tr>
+<td> 3 </td>
+<td> Produto entre os números digitados </td>
+</tr>
+<tr>
+<td> 4 </td>
+<td> Divisão do primeiro pelo segundo </td>
+</tr>
+</tbody></table>
+
+<p>Se a opção digitada for inválida, seu programa deverá exibir a mensagem <b>ERRO</b> e terminar a execução do programa. Lembre-se de que, na operação 4, o segundo número deve ser diferente de zero. Nesta situação, caso o segundo número seja igual a zero, a mensagem <b>ERRO</b> também deve ser exibida.</p>
+
+<p><b>Entradas:</b></p>
+<ol>
+<li>Dois  números em ponto flutuante com precisão dupla A e B.</li>
+<li>Número inteiro X que indica a operação aritmética a ser computada.</li>
+</ol>
+<p><b>Saídas:</b></p>
+<ol>
+<li>Número em ponto flutuante com precisão dupla que denota o resultado da expressão aritmética; ou a mensagem <b>ERRO</b>, caso o usuário insira um valor inválido de operação .</li>
+</ol>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>9.5
+7.0
+5
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>ERRO
+</pre>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>9.5
+7.0
+2
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>2.5
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ5"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 26/11/2022 22:55:15</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial426&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial426">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+using namespace std;
+
+int main(){
+	double a,b,operation;
+	int x;
+	cin&gt;&gt;a&gt;&gt;b&gt;&gt;x;
+	
+	if(x == 1){
+	  operation = (a + b) / 2;
+	  cout&lt;&lt;operation;
+	}
+	else if(x == 2){
+	  if(a &gt; b) operation = a - b;
+	  if(b &gt; a) operation = b - a;
+	  cout&lt;&lt;operation;
+	}
+	else if(x == 3){
+	  operation = a * b;
+	  cout&lt;&lt;operation;
+	}
+	else if(x == 4){
+	   if(b == 0){
+	     cout&lt;&lt;"ERRO";
+	   } else {
+	     operation = a / b;
+	     cout&lt;&lt;operation;
+	   } 
+	} else {
+	   cout&lt;&lt;"ERRO";
+	}
+	return 0;
+}
+
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="426">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="5">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q6"></a>
+        <h3>Questão 6: Estrutura Condicional - Média Ponderada de Três Avaliações</h3>
+        <div class="description-display-box">
+<p>A nota final de um estudante é calculada a partir de três notas atribuídas, respectivamente, a um trabalho de laboratório, a uma avaliação semestral e a um exame final. A média das três notas mencionadas obedece aos pesos a seguir:</p>
+
+<table>
+<tbody><tr>
+<td> <b>Nota</b></td>
+<td> <b>Peso</b> </td>
+</tr>
+<tr>
+<td> Trabalho de Laboratório </td>
+<td> 2 </td>
+</tr>
+<tr>
+<td> Avaliação Semestral </td>
+<td> 3 </td>
+</tr>
+<tr>
+<td> Exame Final </td>
+<td> 5 </td>
+</tr>
+</tbody></table>
+<p> Faça um programa que receba as três notas do dispositivo de entrada padrão, calcule e mostre a média ponderada das notas obtidas pelo aluno. Seu programa deverá informar também o conceito obtido pelo aluno na disciplina, segundo a relação a seguir:</p>
+<table>
+<tbody><tr>
+<td> <b>Média Ponderada</b></td>
+<td> <b>Conceito</b> </td>
+</tr>
+<tr>
+<td> [8.0,10.0] </td>
+<td> A </td>
+</tr>
+<tr>
+<td> [7.0,8.0[ </td>
+<td> B </td>
+</tr>
+<tr>
+<td> [6.0,7.0[ </td>
+<td> C </td>
+</tr>
+<tr>
+<td> [5.0,6.0[ </td>
+<td> D </td>
+</tr>
+<tr>
+<td> [0.0,5.0[ </td>
+<td> E </td>
+</tr>
+</tbody></table>
+
+<p><b>Entradas:</b></p>
+<ol>
+<li>Três números em ponto flutuante que denotam as três notas obtidas pelo aluno. As notas são fornecidas de acordo com a seguinte ordem: nota do trabalho de laboratório, nota da avaliação semestral e, por último, nota do exame final. Cada dado de entrada será fornecido em uma linha diferente.</li>
+</ol>
+<p><b>Saídas:</b></p>
+<ol>
+<li>Número em ponto flutuante que indica a média ponderada das notas passadas como entrada.</li>
+<li>Caractere que indica o conceito obtido pelo aluno na disciplina.</li>
+</ol>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>7.5
+5.0
+6.1
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>6.05
+C
+</pre>
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>8.0
+6.5
+8.9
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>8.0
+A
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ6"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 27/11/2022 01:12:33</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial420&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial420">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+int main(){
+	float nota1, nota2, nota3, mediap;
+	cin&gt;&gt;nota1&gt;&gt;nota2&gt;&gt;nota3;
+	
+	mediap = ((2*nota1) + (3*nota2) + (5*nota3))/10;
+	if(mediap &lt;= 10 and mediap &gt;= 8){
+	  cout&lt;&lt;fixed&lt;&lt;setprecision(1)&lt;&lt;mediap&lt;&lt;endl&lt;&lt;"A";     
+	}else if(mediap &lt; 8 and mediap &gt;= 7){
+      cout&lt;&lt;mediap&lt;&lt;setprecision(1)&lt;&lt;endl&lt;&lt;"B";
+    }else if(mediap &lt; 7 and mediap &gt;= 6){
+      cout&lt;&lt;mediap&lt;&lt;setprecision(1)&lt;&lt;endl&lt;&lt;"C";
+    }else if(mediap &lt; 6 and mediap &gt;= 5){
+      cout&lt;&lt;mediap&lt;&lt;setprecision(1)&lt;&lt;endl&lt;&lt;"D";
+    } else {
+	  cout&lt;&lt;mediap&lt;&lt;endl&lt;&lt;"E";
+	}
+	return 0;
+}
+
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="420">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="6">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q7"></a>
+        <h3>Questão 7: Estrutura Condicional - Grupos de Risco</h3>
+        <div class="description-display-box">
+<p>Faça um programa que receba a idade e o peso de uma pessoa (uma informação em cada linha). De acordo com a relação a seguir, seu programa deverá verificar e exibir no dispositivo de saída padrão a qual grupo de risco essa pessoa se encaixa. Os grupos de risco são denotados por um número natural compreendido no intervalo [1,9].</p>
+
+<table>
+<tbody><tr>
+<td> <b>Idade (em anos)</b></td>
+<td> <b>Até 60 Kg</b> </td>
+<td> <b>Entre 60 Kg e 90 Kg (inclusive) </b> </td>
+<td> <b>Acima de 90 Kg </b> </td>
+</tr>
+<tr>
+<td> Menores que 20 </td>
+<td> 9 </td>
+<td> 8 </td>
+<td> 7 </td>
+</tr>
+<tr>
+<td> De 20 a 50 (inclusive) </td>
+<td> 6 </td>
+<td> 5 </td>
+<td> 4 </td>
+</tr>
+<tr>
+<td> Maiores que 50 </td>
+<td> 3 </td>
+<td> 2 </td>
+<td> 1 </td>
+</tr>
+</tbody></table>
+
+<p><b>Entradas:</b></p>
+<ol>
+<li>Número inteiro que indica a idade de uma pessoa.</li>
+<li>Número em ponto flutuante que indica o peso de uma pessoa em quilogramas.</li>
+</ol>
+<p><b>Saídas:</b></p>
+<ol>
+<li>Número inteiro que indica o grupo de risco no qual a pessoa se encaixa.</li>
+</ol>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>30
+80.0
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>5
+</pre>
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>50
+97.35
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>4
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ7"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 27/11/2022 01:29:28</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial429&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial429">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+int main(){
+	int idade, peso;
+	cin&gt;&gt;idade&gt;&gt;peso;
+	
+	if(idade &lt; 20){
+	   if(peso &lt; 60){
+	     cout&lt;&lt;9;
+	   } else if(peso &gt;= 60 and peso &lt;= 90){
+	     cout&lt;&lt;8;   
+	   } else if(peso &gt; 90){
+	     cout&lt;&lt;7;
+	   }
+	}
+	if(idade &gt;= 20 and idade &lt;= 50){
+	   if(peso &lt; 60){
+	     cout&lt;&lt;6;
+	   } else if(peso &gt;= 60 and peso &lt;= 90){
+	     cout&lt;&lt;5;   
+	   } else if(peso &gt; 90){
+	     cout&lt;&lt;4;
+	   }
+	}
+	if(idade &gt; 50){
+	   if(peso &lt; 60){
+	     cout&lt;&lt;3;
+	   } else if(peso &gt;= 60 and peso &lt;= 90){
+	     cout&lt;&lt;2;   
+	   } else if(peso &gt; 90){
+	     cout&lt;&lt;1;
+	   }
+	}
+	return 0;
+}
+
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="429">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="7">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q8"></a>
+        <h3>Questão 8: Estrutura Condicional - Classificando idades.</h3>
+        <div class="description-display-box">
+<p>Faça um programa que receba a idade de um nadador e mostre sua categoria, usando as regras a seguir. Para idade inferior a 5, deverá mostrar mensagem: "Nao registrado".</p>
+<p><b>Obs.:</b> As strings de saída, não devem conter acentuação.</p>
+<center><table>
+<tbody><tr>
+<th> Categoria</th>
+<th> Idade</th>
+</tr>
+<tr>
+<td> Infantil </td>
+<td> 5 a 7 </td>
+</tr>
+<tr>
+<td> Juvenil </td>
+<td> 8 a 10  </td>
+</tr><tr>
+<td> Adolescente </td>
+<td> 11 a 15 </td>
+</tr>
+<tr>
+<td> Adulto </td>
+<td> 16 a 30 </td>
+</tr>
+<tr>
+<td> Senior </td>
+<td> Acima de 30 </td>
+</tr>
+</tbody></table>
+</center>
+<p>Entradas:</p>
+<ol>
+<li>Idade do nadador (número inteiro).</li>
+</ol>
+<p>Saídas:</p>
+<ol>
+<li>Texto que indica a categoria.</li>
+</ol>
+<p>Exemplo de Entrada:</p>
+<pre>16</pre>
+<p>Exemplo de Saída:</p>
+<pre>Adulto</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ8"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 27/11/2022 01:41:06</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial730&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial730">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+int main(){
+    int idade;
+    cin&gt;&gt;idade;
+    
+    if(idade &lt; 5){
+       cout&lt;&lt;"Nao registrado";    
+    }
+    else if(idade &gt;= 5 and idade &lt;= 7){
+       cout&lt;&lt;"Infantil";    
+    }
+    else if(idade &gt;= 8 and idade &lt;= 10){
+       cout&lt;&lt;"Juvenil";    
+    }
+    else if(idade &gt;= 11 and idade &lt;= 15){
+       cout&lt;&lt;"Adolescente";    
+    }
+    else if(idade &gt;= 16 and idade &lt;= 30){
+       cout&lt;&lt;"Adulto";    
+    }
+    else cout&lt;&lt;"Senior";
+	return 0;
+}
+
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="730">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="8">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q9"></a>
+        <h3>Questão 9: Estrutura Condicional - Quarto número na ordem</h3>
+        <div class="description-display-box">
+<p>Em muitos programas é muito útil ter os dados em uma determinada ordem: números do menor para o maior, palavras em ordem alfabética, etc. Nesse exercício você deve criar um programa que recebe três números inteiros em ordem crescente, ou seja, o usuário fornecerá os números garantindo que o segundo é maior que o primeiro e o terceiro é maior que o segundo. O programa deverá receber também um quarto número inteiro qualquer e, deve exibir os quatro números em ordem crescente. Atente para o caso em que o quarto número pode ser igual a um dos demais.</p>
+
+<p><b>Entradas:</b></p>
+<ol>
+<li>Três números inteiros informados em ordem crescente. Um número inteiro qualquer. Cada dado de entrada será fornecido em uma linha diferente.</li>
+</ol>
+<p><b>Saídas:</b></p>
+<ol>
+<li>Os quatro números inteiros informados exibidos em ordem crescente.</li>
+</ol>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>3 
+6 
+9
+4
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>3 4 6 9
+</pre>
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>1
+5
+7
+11
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>1 5 7 11
+</pre>
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>3
+6
+12
+2
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>2 3 6 12
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ9"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 22/11/2022 14:32:15</p>
+        <p><b>Tentativas:</b> 4 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Correção manual. Cuidado com a indentação.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial431&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial431">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    int a1, a2, a3, b;
+    cin&gt;&gt;a1&gt;&gt;a2&gt;&gt;a3&gt;&gt;b;
+    
+    if(b&lt;=a1){
+	  cout&lt;&lt;b&lt;&lt;" "&lt;&lt;a1&lt;&lt;" "&lt;&lt;a2&lt;&lt;" "&lt;&lt;a3;
+	} else if (b&gt;a1 and b&lt;=a2){
+	  cout&lt;&lt;a1&lt;&lt;" "&lt;&lt;b&lt;&lt;" "&lt;&lt;a2&lt;&lt;" "&lt;&lt;a3;
+	} else if (b&gt;a1 and b&gt;a2 and b&lt;=a3){
+	  cout&lt;&lt;a1&lt;&lt;" "&lt;&lt;a2&lt;&lt;" "&lt;&lt;b&lt;&lt;" "&lt;&lt;a3;
+	} else {
+	  cout&lt;&lt;a1&lt;&lt;" "&lt;&lt;a2&lt;&lt;" "&lt;&lt;a3&lt;&lt;" "&lt;&lt;b;
+	}
+    return 0;
+}
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="431">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="5">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="9">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q10"></a>
+        <h3>Questão 10: Estrutura Condicional - Carácter com Maior Representação Numérica</h3>
+        <div class="description-display-box">
+<p>Faça um programa que lê duas letras (uma em cada linha) e escreve aquela que for representada pelo maior número no sistema de codificação de caracteres que estiver em uso.</p>
+<p><b>Entradas:</b></p>
+<ol>
+<li>Dois caracteres (um em cada linha).</li>
+</ol>
+<p><b>Saídas</b></p>
+<ol>
+<li>Caractere com maior representação numérica.</li>
+</ol>
+<p><b>Exemplo de entrada</b>:</p>
+<pre>a
+p
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>p
+</pre>
+
+<p></p>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>a
+P
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>a
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ10"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 27/11/2022 01:47:51</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial434&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial434">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+int main(){
+    char a,b;
+    cin&gt;&gt;a&gt;&gt;b;
+    
+    if(int(a) &gt; int(b)){
+	  cout&lt;&lt;a;
+	} else cout&lt;&lt;b;
+	return 0;
+}
+
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="434">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="10">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q11"></a>
+        <h3>Questão 11: Estrutura Condicional - Classificação por Peso e Altura</h3>
+        <div class="description-display-box">
+<p>Faça um programa que receba o peso e a altura de uma pessoa. De acordo com a tabela a seguir, verifique e mostre a classificação dessa pessoa.
+
+</p><table>
+<tbody><tr>
+<th rowspan="2">Altura</th>
+<th colspan="3">Peso</th>
+</tr>
+<tr>
+<th>Abaixo de 60Kg</th>
+<th>Entre 60Kg e 90Kg (inclusive)</th>
+<th>Acima de 90Kg</th>
+</tr>
+<tr>
+<td>Menores que 1,20m</td>
+<td>A</td>
+<td>D</td>
+<td>G</td>
+</tr>
+<tr>
+<td>De 1,20m a 1,70m (inclusive)</td>
+<td>B</td>
+<td>E</td>
+<td>H</td>
+</tr>
+<tr>
+<td>Maiores que 1,70m</td>
+<td>C</td>
+<td>F</td>
+<td>I</td>
+</tr>
+</tbody></table>
+
+<p><b>Entradas:</b><pr>
+</pr></p><ul>
+<li>Peso e altura do indivíduo (em ponto flutuante)</li>
+</ul><p></p>
+
+
+<p><b>Saídas:</b><pr>
+</pr></p><ul>
+<li>Classificação do indivíduo (um caracter)</li>
+</ul><p></p>
+
+<p><b>Exemplo de entrada:</b><br>
+</p><pre>54.2
+1.56
+</pre><p></p>
+
+<p><b>Exemplo de saída:</b><br>
+</p><pre>B
+</pre><p></p>
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>90
+1.83
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>F
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ11"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 05/12/2022 22:54:43</p>
+        <p><b>Tentativas:</b> 5 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial455&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial455">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+int main(){
+    double peso, altura = 0;
+    cin&gt;&gt;peso&gt;&gt;altura;
+    
+    if(peso &lt; 60.0){
+	   if(altura &lt; 1.20) cout&lt;&lt;"A";
+	   if(altura &gt;= 1.20 and altura &lt;= 1.70) cout&lt;&lt;"B";
+	   if(altura &gt; 1.70) cout&lt;&lt;"C";
+	}
+	if(peso &gt;= 60.0 and peso &lt;= 90.0){
+	   if(altura &lt; 1.20) cout&lt;&lt;"D";
+	   if(altura &gt;= 1.20 and altura &lt;= 1.70) cout&lt;&lt;"E";
+	   if(altura &gt; 1.70) cout&lt;&lt;"F";
+	}
+	if(peso &gt; 90){
+	   if(altura &lt; 1.20) cout&lt;&lt;"G";
+	   if(altura &gt;= 1.20 and altura &lt;= 1.70) cout&lt;&lt;"H";
+	   if(altura &gt; 1.70) cout&lt;&lt;"I";
+	}
+}
+
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="455">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="6">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="11">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q12"></a>
+        <h3>Questão 12: Estrutura Condicional - Alfândega</h3>
+        <div class="description-display-box">
+<p>Faça um programa para auxiliar nas atividades realizadas por uma alfândega. Para realizar estas atividades seu programa deverá receber como entrada três tipos de informação, a saber: (1) código de um produto comprado. Assuma que a digitação do código do produto será sempre válida, o que neste programa significa um número inteiro entre 1 e 10 ; (2) peso do produto em quilogramas; e (3) código do país de origem do produto. Assuma que a digitação do código será sempre válida, o que neste programa significa um número inteiro entre 1 e 3. Cada dado de entrada será fornecido em uma linha diferente. Seu programa deverá calcular e exibir no dispositivo de saída padrão as seguintes informações (nesta ordem):</p>
+
+<ol>
+<li>O peso do produto convertido em gramas.</li>
+<li>O preço bruto do produto comprado, definido de acordo com o seu peso em gramas e o código do produto.</li>
+<li>O valor do imposto, sabendo-se que ele é cobrado sobre o preço bruto do produto comprado e depende do país de origem.</li>
+<li>O valor total do produto, dado pelo preço bruto do produto mais o imposto.</li>
+</ol>
+
+<p>Para realizar estes cálculos, considere as tributações elucidadas a seguir:</p>
+
+<table>
+<tbody><tr>
+<td> <b>Código do país de origem</b></td>
+<td> <b>Imposto</b> </td>
+</tr>
+<tr>
+<td> 1 </td>
+<td> 0% </td>
+</tr>
+<tr>
+<td> 2 </td>
+<td> 15% </td>
+</tr>
+<tr>
+<td> 3 </td>
+<td> 25% </td>
+</tr>
+</tbody></table>
+
+<table>
+<tbody><tr>
+<td> <b>Código do produto</b></td>
+<td> <b>Preço por grama</b> </td>
+</tr>
+<tr>
+<td> 1 a 4 </td>
+<td> 10 </td>
+</tr>
+<tr>
+<td> 5 a 7 </td>
+<td> 25 </td>
+</tr>
+<tr>
+<td> 8 a 10 </td>
+<td> 35 </td>
+</tr>
+</tbody></table>
+
+<p><b>Entradas:</b></p>
+<ol>
+<li>Número inteiro que denota o código do produto. Número entre 1 e 10.</li>
+<li>Número em ponto flutuante (float) que denota o peso do produto em quilogramas.</li>
+<li>Número inteiro que denota o país de origem do produto. Número entre 1 e 3.</li>
+</ol>
+<p><b>Saídas:</b></p>
+<ol>
+<li>Número em ponto flutuante (float) que denota o peso do produto em gramas.</li>
+<li>Número em ponto flutuante (float) que denota o preço bruto do produto.</li>
+<li>Número em ponto flutuante (float) que denota o imposto sobre o produto.</li>
+<li>Número em ponto flutuante (float) que denota o preço total do produto.</li>
+</ol>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>7
+0.5
+3
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>500.0
+12500.0
+3125.0
+15625.0
+</pre>
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>3
+4.7532
+1
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>4753.2
+47532.0
+0.0
+47532.0
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ12"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 05/12/2022 23:22:46</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial424&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial424">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+int main(){
+    int code, country;
+    float weight, weightConvert;
+    float priceConvert, taxes, priceTotal;
+    cin&gt;&gt;code&gt;&gt;weight&gt;&gt;country;
+    
+    weightConvert = weight * 1000;
+    if(code &gt;= 1 and code &lt;= 4){
+	  priceConvert = weightConvert * 10;
+	} else if (code &gt;= 5 and code &lt;= 7){
+	  priceConvert = weightConvert * 25; 
+	} else priceConvert = weightConvert * 35; 
+    
+    if(country == 1) taxes = 0;
+    if(country == 2) taxes = priceConvert * 15 / 100;
+    if(country == 3) taxes = priceConvert * 25 / 100;
+    
+    priceTotal = taxes + priceConvert;
+    cout&lt;&lt;fixed&lt;&lt;setprecision(1)&lt;&lt;weightConvert&lt;&lt;endl&lt;&lt;priceConvert&lt;&lt;endl&lt;&lt;taxes&lt;&lt;endl&lt;&lt;priceTotal;
+}
+
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="424">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="12">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q13"></a>
+        <h3>Questão 13: Estrutura Condicional - Gratificação de Natal.</h3>
+        <div class="description-display-box">
+<p>Uma empresa decidiu dar uma gratificação de natal a seus funcionários, baseada no número de horas extras e no número de horas que o funcionário faltou ao trabalho. O valor do prêmio é obtido pela consulta à tabela que se segue, na qual: </p>
+<p><b>H=número de horas extras - (2/3*(número de horas-faltas))</b></p>
+<center><table>
+<tbody><tr>
+<th>H(Minutos)</th>
+<th> Prêmio(R$) </th>
+</tr>
+<tr>
+<td> Maior que 2400 </td>
+<td> 500 </td>
+</tr>
+<tr>
+<td> Entre 1800 e 2400 (incluso) </td>
+<td> 400  </td>
+</tr>
+<tr>
+<td> Entre 1200 e 1800 (incluso) </td>
+<td> 300  </td>
+</tr>
+<tr>
+<td> Entre 600 e 1200 (incluso) </td>
+<td> 200  </td>
+</tr>
+<tr>
+<td> Menor igual a 600 </td>
+<td> 100  </td>
+</tr>
+</tbody></table>
+</center>
+<p>Entradas:</p>
+<ol>
+<li>Número de horas extras (float).</li>
+<li>Número de horas-faltas (float).</li>
+</ol>
+<p>Saídas:</p>
+<ol>
+<li>Prêmio que o funcionário irá receber.</li>
+</ol>
+<p>Exemplo de Entrada:</p>
+<pre>24
+3</pre>
+<p>Exemplo de Saída:</p>
+<pre>300</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ13"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 05/12/2022 23:35:19</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial731&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial731">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+int main(){
+    float extra, falta, cal, grati;
+    cin&gt;&gt;extra&gt;&gt;falta;
+    
+    cal = (extra - ((2/3)*falta)) * 60;
+    if(cal &gt; 2400) grati = 500;
+    if(cal &gt; 1800 and cal &lt;= 2400) grati = 400;
+    if(cal &gt; 1200 and cal &lt;= 1800) grati = 300;
+    if(cal &gt; 600 and cal &lt;= 1200) grati = 200;
+    if(cal &lt; 600) grati = 100;
+    
+    cout&lt;&lt;grati;
+    return 0;
+}
+
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="731">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="13">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q14"></a>
+        <h3>Questão 14: Estrutura Condicional - Seno ou Cosseno</h3>
+        <div class="description-display-box">
+<p>Muitos programas comumente oferecem diversas funções para o usuário. Em um programa gráfico o usuário escolhe a função que deseja através de componentes gráficos como menus e botões. Já em programas de linha de comando podemos deixar o usuário escolher uma função através de códigos ou símbolos.</p>
+
+<p>Seguindo essa linha faça um programa que permita ao usuário solicitar o cálculo do seno ou do cosseno de um ângulo, e este ângulo pode ser fornecido em graus ou radianos.</p>
+
+<p>Para isso o usuário deverá primeiro informar uma letra para dizer se deseja o cálculo de seno ou cosseno (<em>s</em> ou <em>c</em>). Em seguida, ele deve informar outra letra dizer se o ângulo a ser fornecido será dado em graus ou radianos (<em>g</em> ou <em>r</em>). Por fim, o usuário deve informar um número decimal com o ângulo desejado. O programa deve então calcular o seno ou cosseno do ângulo informado de acordo com a definição do usuário.</p>
+<p>Obs.: soluções em Python devem utilizar funções da biblioteca <b>math</b>. Soluções em C++ devem usar a biblioteca <b>cmath</b>.</p>
+<p><b>Entradas:</b></p>
+<ol>
+<li>Uma letra, <em>s</em> ou <em>c</em>, indicando se será calculado o seno ou o cosseno, respectivamente.</li>
+<li>Uma letra, <em>g</em> ou <em>r</em>, indicando se o ângulo a ser informado está em graus ou radianos.</li>
+<li>Um número decimal representando o ângulo desejado, que pode estar em graus ou radianos</li>
+</ol>
+<p><b>Saídas:</b></p>
+<ol>
+<li>O valor do seno ou cosseno do ângulo passado.</li>
+</ol>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>c
+g
+90
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>0
+</pre>
+<p></p>
+<p><b>Exemplo de Entrada:</b></p>
+<pre>s
+r
+0.5
+</pre>
+<p><b>Exemplo de Saída:</b></p>
+<pre>0.4794
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ14"></a>
+        <p><b>Peso:</b> 1</p>
+        <p><b>Última tentativa realizada em:</b> 04/12/2022 22:54:28</p>
+        <p><b>Tentativas:</b> 1 de 6</p>
+        <p><b>Nota (0 a 100):</b> 100</p>
+        <p><b>Status ou Justificativa de Nota:</b> Nenhum erro encontrado.</p>
+        <button onclick="openDivAsDialog(&#39;lastTrial433&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ver Código da Última Tentativa</span></button>
+        <div style="height: 6px"></div>
+        <div style="display:none" id="lastTrial433">
+            <textarea class="cpp-code-view" style="font-family: monospace" readonly="readonly">#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+#include &lt;iomanip&gt;
+
+using namespace std;
+
+int main(){
+    string sc, gr;
+    float angulo,result;
+    cin&gt;&gt;sc&gt;&gt;gr&gt;&gt;angulo;
+    
+    if(gr == "g"){
+	    angulo = (angulo*M_PI) / 180;
+	}
+    if(sc == "s"){
+		result = sin(angulo);
+    } else result = cos(angulo);
+    
+    cout&lt;&lt;fixed&lt;&lt;setprecision(4)&lt;&lt;result;
+    return 0;
+}
+</textarea>
+        </div><!-- ultima tentativa -->
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="433">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="2">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="14">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q15"></a>
+        <h3>Questão 15: Estrutura Condicional - Somando minutos</h3>
+        <div class="description-display-box">
+<p>Seu jogo preferido envolve a atualização de estruturas que demora vários minutos. O jogo informa quantos minutos faltam para terminar a atualização, mas você gostaria de saber exatamente quando é isso para ajustar um alarme.</p>
+<p>Faça um programa que lê o dia, hora e minuto atual, além de uma duração em minutos e escreve o resultado da adição da duração com o horário atual.</p>
+<p>Para simplificar, suponha que nunca vai ocorrer mudança de mês no processamento.</p>
+<p>Entradas (suponha cada valor numa linha):</p>
+<ol>
+<li>O dia do horário atual (inteiro),</li>
+<li>a hora  do horário atual (inteiro entre 0 e 23),</li>
+<li>o minuto do horário atual (inteiro entre 0 e 59),</li>
+<li>a duração em minutos que a atualização precisa para terminar (inteiro).</li>
+</ol>
+<p>Saídas:</p>
+<ul>
+<li>O dia, hora e minuto em que a atualização termina.</li>
+</ul>
+<p>Exemplo de Entrada:</p>
+<pre>3
+20
+12 
+1911
+</pre>
+<p>Exemplo de Saída:</p>
+<pre>5 4 3</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ15"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="1034">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="15">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q16"></a>
+        <h3>Questão 16: Estrutura Condicional - Os Hóspedes do Hotel Transilvânia</h3>
+        <div class="description-display-box">
+<p>Crie um programa para definir o quarto adequado para hóspedes do Hotel Transilvânia, sabidamente um dos melhores no que diz respeito à hospedagem de vampiros, zumbis, lobisomens e outros tipos de monstros. Para manter a qualidade, o Hotel adota os seguintes critérios:</p>
+<ul>
+<li>Os quartos do hotel são representados por uma centena, sendo que a centena indica o andar, a dezena indica o corredor e a unidade o quarto em específico naquele corredor e andar.</li>
+<li>Zumbis e múmias são sempre hospedados no primeiro andar</li>
+<li>Lobisomens e duendes são sempre hospedados no segundo andar</li>
+<li>Monstros femininos (hárpias e sucubus) são sempre hospedados no terceiro andar</li>
+<li>Vampiros e fantasmas são sempre hospedados no quarto andar</li>
+<li>Para definir o corredor, avalia-se quantas pessoas ficarão no quarto:</li>
+<ul>
+<li>Qualquer monstro, se viajando sozinho hospeda-se em um quarto no corredor 1. </li>
+<li>Caso seja um casal, o quarto fica no corredor 2. </li>
+<li>Caso esteja com filhos (3 ou mais pessoas), o quarto fica no corredor 3.</li>
+</ul>
+<li>Para definir o quarto no corredor, usa-se o tempo que o monstro deseja ficar hospedado. </li>
+<ul>
+<li>Caso o monstro for ficar um ou dois dias, ele fica em um quarto de final 1. </li>
+<li>Caso fique de três a quatro dias, ele fica em um quarto de final 2. </li>
+<li>Caso fique cinco ou seis dias, ele fica em um quarto de final 3. </li>
+<li>Caso fique uma semana ou mais, ele fica em um quarto de final 4.</li>
+</ul>
+</ul>
+<p>Considere, para efeitos práticos, que é início de temporada e os quartos estão todos vazios. <br></p>
+<p>Entradas:</p>
+<ol>
+<li>Tipo de monstro, indicado por uma letra apenas: z (zumbis), m (múmias), l (lobisomens), d (duendes), h (hárpias), s (sucubus), v (vampiros) e f (fantasmas) </li>
+<li>Número de pessoas para o quarto</li>
+<li>Tempo de hospedagem (número de dias)</li>
+</ol>
+<p>Saídas:</p>
+<ol>
+<li>Número do quarto (um inteiro), de acordo com as regras estabelecidas</li>
+</ol>
+<p>Exemplo de Entrada:</p>
+<pre>v 4 8</pre>
+<p>Exemplo de Saída:</p>
+<pre>434</pre>
+<p>Exemplo de Entrada:</p>
+<pre>z 1 3</pre>
+<p>Exemplo de Saída:</p>
+<pre>112</pre>
+
+        </div><!-- description-display-box -->
+        <a name="JQ16"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="1457">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="16">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q17"></a>
+        <h3>Questão 17: Estrutura Condicional - Aposentadoria</h3>
+        <div class="description-display-box">
+<p>Devido ao défict previdenciário brasileiro, o governo propôs novas regras de aposentadoria. Para os trabalhadores que já estão na ativa, existe uma regra de transição que prevê um pedágio (tempo extra) de 30% sobre o tempo que faltaria para atingir 30 anos de trabalho, se for mulher, ou 35 anos de trabalho, se for homem. Por exemplo, uma mulher de 50 anos de idade que já trabalhou 25 anos deverá pagar um pedágio de 30% sobre os 5 anos restantes (que faltariam para completar 30 anos de trabalho), ou seja, terá que trabalhar por mais 6,5 anos. Com isso, ela irá se aposentar aos 56,5 anos, quando alcançará 31,5 anos trabalhados. No entanto, essa regra de transição só é válida para pessoas que já estão trabalhando por mais de 15 anos (15 não incluso), no caso de mulheres, ou mais de 20 anos (20 não incluso), no caso de homens. Para todos os demais casos, a aposentadoria se dará por idade mínima, ou seja, 62 anos para mulheres e 65 anos para homens. Faça um programa que leia o gênero, a idade e a quantidade de anos já trabalhados por uma pessoa e calcule a idade com a qual a mesma irá se aposentar.</p> 
+<p>Entradas:</p>
+<ol>
+<li>O gênero da pessoa, que será o valor inteiro 1 se for homem ou 0 se for mulher.</li>
+<li>Idade da pessoa (valor inteiro).</li>
+<li>Quantidade de tempo (anos) já trabalhados pela pessoa (número real).</li>
+</ol>
+<p>Saídas:</p>
+<ol>
+<li>Idade que a pessoa terá a se aposentar (número real).</li>
+</ol>
+<p>Exemplo de Entrada:</p>
+<pre>0
+50
+25
+</pre>
+<p>Exemplo de Saída:</p>
+<pre>56.5</pre>
+<p>Exemplo de Entrada:</p>
+<pre>1
+35
+10
+</pre>
+<p>Exemplo de Saída:</p>
+<pre>65</pre>
+
+        </div><!-- description-display-box -->
+        <a name="JQ17"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="1439">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="17">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q18"></a>
+        <h3>Questão 18: Estrutura Condicional - Colisão Frontal de Trens</h3>
+        <div class="description-display-box">
+<p>Dois maquinistas estão andando em uma mesma linha de trem em sentido a uma colisão. Faça um programa que dada a velocidade dos trens, calcule o tempo restante para a colisão. Se o tempo para a colisão for menor ou igual a 10 segundos, os trens não conseguem parar e o software deve imprimir a palavra "COLISAO". Caso contrário, o tempo deve ser impresso. Lembrando que a fórmula da distância percorrida é d = v <span>×</span> t e que quando objetos estão dirigindo-se em rota de colisão frontal, deve-se somar as velocidades.</p>
+<p></p>
+<p>Entradas:</p>
+<ol>
+<li>Velocidade do trem 1 (número real)</li>
+<li>Velocidade do trem 2 (número real)</li>
+<li>Distância entre os trens (número real)</li>
+</ol>
+<p>Saídas:</p>
+<ol>
+<li>A palavra "COLISAO" caso o tempo para a colisão seja menor ou igual a 10 ou o tempo caso contrário.</li>
+
+</ol>
+
+<p><b> Exemplo </b></p>
+
+
+<p>
+
+<button onclick="control(&#39;1654sample1&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Exemplo 1</span></button>
+
+<button onclick="control(&#39;1654sample2&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Exemplo 2</span></button>
+
+<button onclick="control(&#39;1654sample3&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Exemplo 3</span></button>
+
+<button onclick="control(&#39;1654sample4&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Exemplo 4</span></button>
+
+<button onclick="control(&#39;1654sample5&#39;);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Exemplo 5</span></button>
+
+</p>
+
+<div id="1654sample1" style="display:none">
+<p><b>Exemplo 1</b></p>
+<p><b>Exemplo de entrada:</b></p>
+<pre>39.07
+15.29
+951.67
+</pre>
+
+<p><b>Exemplo de Saída:</b></p>
+<pre>17.51
+</pre>
+<p></p>
+</div>
+
+<div id="1654sample2" style="display:none">
+<p><b>Exemplo 2</b></p>
+<p><b>Exemplo de entrada:</b></p>
+<pre>46.60
+42.59
+106.35
+</pre>
+
+<p><b>Exemplo de Saída:</b></p>
+<pre>COLISAO
+</pre>
+<p></p>
+</div>
+
+<div id="1654sample3" style="display:none">
+<p><b>Exemplo 3</b></p>
+<p><b>Exemplo de entrada:</b></p>
+<pre>25.78
+13.58
+685.80
+</pre>
+
+<p><b>Exemplo de Saída:</b></p>
+<pre>17.42
+</pre>
+<p></p>
+</div>
+
+<div id="1654sample4" style="display:none">
+<p><b>Exemplo 4</b></p>
+<p><b>Exemplo de entrada:</b></p>
+<pre>1.98
+20.24
+290.80
+</pre>
+
+<p><b>Exemplo de Saída:</b></p>
+<pre>13.09
+</pre>
+<p></p>
+</div>
+
+<div id="1654sample5" style="display:none">
+<p><b>Exemplo 5</b></p>
+<p><b>Exemplo de entrada:</b></p>
+<pre>12.66
+0.48
+560.74
+</pre>
+
+<p><b>Exemplo de Saída:</b></p>
+<pre>42.67
+</pre>
+<p></p>
+</div>
+
+
+<script>
+function control(name) {
+  var x = document.getElementById(name);
+  if (x.style.display === 'none') {
+    x.style.display = 'block';
+  } else {
+    x.style.display = 'none';
+  }
+}
+</script>
+        </div><!-- description-display-box -->
+        <a name="JQ18"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="1654">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="18">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q19"></a>
+        <h3>Questão 19: Estrutura Condicional - Notas Musicais</h3>
+        <div class="description-display-box">
+<p>As notas musicais são: Dó, Ré, Mi, Fá, Sol, Lá e Si. Em notação musical, estas notas são respectivamente chamadas de C, D, E, F, G, A e B. Isto é, C=Dó, D=Ré, E=Mi, F=Fá, G=Sol, A=Lá e B=Si.</p>
+<p>Faça um programa que recebe a letra que indica a nota e escreve o nome correspondente em português, sem acentos.</p>
+<p>Entradas:</p>
+<ol>
+<li>Letra que indica a nota (maiúscula).</li>
+</ol>
+<p>Saídas:</p>
+<ol>
+<li>Nome da nota em português (sem acentos, inicial maiúscula).</li>
+</ol>
+<p>Exemplo de Entrada:</p>
+<pre>C</pre>
+<p>Exemplo de Saída:</p>
+<pre>Do</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ19"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="1190">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="19">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q20"></a>
+        <h3>Questão 20: Estrutura condicional - Churrasco da República Trintagarantido</h3>
+        <div class="description-display-box">
+<p>Para comprar os itens do churrasco que seria realizado na República Trintagarantido, Juvenal e Roberto foram até um hipermercado da cidade. Chegando na seção de churrasco, receberam uma lista com todos os produtos disponíveis e foram orientados a preencher a quantidade desejada de cada um deles. Na lista estão os itens: picanha, alcatra, linguiça, espetinho vegetariano, sal, farinha e carvão. As quantidades a serem informadas por Juvenal e Roberto serão sempre valores inteiros.</p>
+
+<p>Além disso, no momento do pagamento da compra, o atendente informou que o supermercado estava realizando uma promoção. Nas compras até R$ 200,00 (incluso) eles recebem 5% de desconto e que compras acima de R$ 200,00 recebiam 10% de desconto no total da compra realizada.</p>
+
+<p>Escreva um programa que calcule e escreva o total da compra realizada, o valor do desconto e o valor final a ser pago por Juvenal e Roberto (não se preocupe com a quantidade de casas decimais nos valores).</p>
+
+<div align="center">
+<p>
+</p><table border="1">
+<tbody><tr>
+<th>Produto</th>
+<th>Preço por quilo (R$)</th>
+</tr>
+<tr>
+<td>picanha </td>
+<td>28,90 </td>
+</tr>
+<tr>
+<td> alcatra </td>
+<td>19,90</td>
+</tr>
+<tr>
+<td> linguiça </td>
+<td>7,95</td>
+</tr>
+<tr>
+<td> espetinho vegetariano </td>
+<td>2,99</td>
+</tr>
+<tr>
+<td> sal </td>
+<td>1,50 </td>
+</tr>
+<tr>
+<td> farinha </td>
+<td>1,85</td>
+</tr>
+<tr>
+<td> carvão </td>
+<td>8,70</td>
+</tr>
+</tbody></table>
+<br>
+<p></p>
+</div>
+
+<p>A entrada de dados é composta de sete números inteiros representando a quantidade a ser comprada de cada produto.</p>
+
+<p><b>Entradas:</b></p>
+<ol>
+<li>Sete números inteiros (sendo um por linha) indicando as quantidades a serem compradas de cada produto.
+</li></ol>
+
+<p><b>Saída:</b></p>
+<ol>
+<li>O valor total da compra </li>
+<li>O valor do desconto a ser obtido na compra </li>
+<li>O valor final da compra (valor total - descontos) </li>
+</ol>
+
+<p><b>Exemplo de entrada:</b></p>
+<pre>2
+3
+4
+4
+1
+1
+4</pre>
+<p><b>Exemplo de saída:</b></p>
+<pre>199.41
+9.97
+189.44</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ20"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="1554">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="20">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q21"></a>
+        <h3>Questão 21: Estrutura Condicional - Passatempo dos bandeirantes</h3>
+        <div class="description-display-box">
+<p>Bandeirantes é a denominação dada aos sertanistas do período colonial, que, a partir do início do século XVI, penetraram nos sertões da América do Sul em busca de riquezas minerais, sobretudo o ouro e a prata.</p>
+<p>Em um dado grupo de bandeirantes, um jogo bem simples se mostrou particularmente popular durante suas longas viagens. Tal jogo consistia em falar uma determinada cor se um dado número natural de 6 algarismos fosse um palíndromo, ou dizer uma segunda outra cor caso não fosse. Faça um programa que leia o nome de duas cores e um número natural (nesta ordem), seu programa deverá exibir o nome da primeira cor caso o número natural fornecido seja um palíndromo ou exibir o nome da segunda cor caso ele não seja um palíndromo. Cada dado de entrada será fornecido em uma linha diferente.</p>
+
+<p>Dizemos que um número natural <b>N</b> é palíndromo se</p>
+<ol>
+<li>Primeiro algarismo de <b>N</b> é igual ao seu último algarismo</li>
+<li>Segundo algarismo de <b>N</b> é igual ao penúltimo algarismo</li>
+</ol>
+<p>e assim sucessivamente.</p>
+
+<p>Entradas:</p>
+<ol>
+<li>Nome da primeira cor.</li>
+<li>Nome da segunda cor.</li>
+<li>Número inteiro N.</li>
+</ol>
+<p>Saídas:</p>
+<ol>
+<li>Nome de uma cor segundo a regra definida no enunciado desta questão.</li>
+</ol>
+<p>Exemplo de Entrada:</p>
+<pre>azul
+vermelho
+567765
+</pre>
+<p>Exemplo de Saída:</p>
+<pre>azul
+</pre>
+
+<p>Exemplo de Entrada:</p>
+<pre>azul
+vermelho
+567675
+</pre>
+<p>Exemplo de Saída:</p>
+<pre>vermelho
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ21"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="754">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="21">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q22"></a>
+        <h3>Questão 22: Estrutura Condicional - Exclusão de animais na caravela</h3>
+        <div class="description-display-box">
+<p>Pedro Álvares Cabral precisa organizar as caravelas para carregarem os cavalos, as vacas e as galinhas necessárias para a viagem para as Índias.</p>
+
+<p>A caravela possui um limite de carga e você deverá calcular a quantidade máxima de cada tipo de animal que a caravela poderá carregar. Lembre-se que Cabral possui uma quantidade limitada de cada tipo de animal, além disso, ele também informou qual o tipo de animal que é prioritário e que tipo de informação ele precisa para poder finalizar sua tarefa.</p>
+
+<p>A tabela abaixo apresenta o peso de cada tipo de animal:</p>
+
+<table>
+<tbody><tr> <td> <b>Tipo</b></td> <td> <b>Peso</b></td> </tr>
+<tr> <td> Cavalo </td> <td> 250 </td> </tr>
+<tr> <td> Vaca </td> <td> 150 </td></tr>
+<tr> <td> Galinha </td> <td> 2 </td></tr>
+</tbody></table>
+
+<p><b>Informações extras:</b></p>
+<ul style="text-align:left;padding-left:20px;">
+<li>O objetivo é colocar o máximo de animais, dessa forma os animais de pequeno porte tem prioridade.</li>
+<li>Ao final do processo é necessário ter como informação a quantidade de cada animal que não pode ser incluído na caravela.</li>
+</ul>
+
+<p><b>Entradas:</b></p>
+<ol>
+<li>Limite de Carga (Inteiro).</li>
+<li>Quantidade de cavalos disponíveis (Inteiro).</li>
+<li>Quantidade de vacas disponíveis (Inteiro).</li>
+<li>Quantidade de galinhas disponíveis (Inteiro).</li>
+</ol>
+<p><b>Saída:</b></p>
+<ol>
+<li>Quantidade de animais que <b>NÃO</b> podem ser incluídos numa caravela na seguinte ordem: Cavalos, Vacas e Galinhas.</li>
+</ol>
+
+<p><b>Exemplo de entrada</b>:</p>
+<pre>3000
+10
+10
+10
+</pre>
+<p><b>Exemplo de saída</b>:</p>
+<pre>5
+0
+0
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ22"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="1033">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="22">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q23"></a>
+        <h3>Questão 23: Estrutura Condicional - Maior e Segundo Maior</h3>
+        <div class="description-display-box">
+<p>Faça um algoritmo que leia quatro números reais diferentes. Após isso, imprima o maior valor e o segundo maior valor. <br></p>
+
+<p><b>Entradas:</b><pr>
+</pr></p><ul>
+<li>quatro numeros em ponto flutuante</li>
+</ul><p></p>
+
+
+<p><b>Saídas:</b><pr>
+</pr></p><ul>
+<li>dois numeros em ponto flutuante (maior e segundo maior elemento)</li>
+</ul><p></p>
+
+<p><b>Exemplo de entrada:</b><br>
+</p><pre>13.1
+2.2
+5.8
+6.9
+</pre><p></p>
+
+<p><b>Exemplo de saída:</b><br>
+</p><pre>13.1
+6.9
+</pre><p></p>
+
+        </div><!-- description-display-box -->
+        <a name="JQ23"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="446">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="23">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div class="problem-try-ct">
+        <a name="Q24"></a>
+        <h3>Questão 24: Estrutura condicional - Multa de velocidade</h3>
+        <div class="description-display-box">
+<p>
+Os moradores do município de Passa ou Fica pediram para o prefeito da cidade a instalação de radares nas ruas da cidade. O prefeito, como bom gestor, atendeu às solicitações da população e realizou a instalação dos aparelhos. No entanto, ainda falta o sistema para cálculo das multas. Por isso, o prefeito solicitou que sua empresa desenvolvesse o  sistema de cálculo das multas.
+</p>
+<p>
+O valor base da multa estipulada pela Secretaria de trânsito varia de radar para radar. Esse valor de multa ainda pode ser aumentado, conforme variação da velocidade do motorista, descrito na tabela abaixo: 
+</p>
+
+<div align="center">
+<p>
+</p><table border="1">
+<tbody><tr>
+<th>Velocidade do veículo</th>
+<th>Cálculo da multa</th>
+</tr>
+<tr>
+<td>Até 30% (incluso) acima da velocidade da pista </td>
+<td>Não se aplica </td>
+</tr>
+<tr>
+<td> Acima de 30% da velocidade da pista </td>
+<td>Multa mais acréscimo de 50% do valor da multa</td>
+</tr>
+</tbody></table>
+<br>
+<p></p>
+</div>
+<p>
+Escreva um programa que calcule a multa recebida por um determinado motorista a partir do valor base da multa, da velocidade da pista e da velocidade registrada no radar para esse motorista.
+</p>
+
+<p><b>Entradas:</b><pr>
+</pr></p><ol>
+<li>Um número real indicando  o valor da multa.</li>
+<li>Um número inteiro indicando a velocidade máxima da pista.</li>
+<li>Um número inteiro indicando a velocidade registrada pelo radar.</li>
+</ol>
+
+<p><b>Saída:</b><pr>
+</pr></p><ol>
+<li>Valor da multa a ser paga pelo motorista. A saída pode ser um número real precedido da string "R$" ou o texto "NAO SE APLICA".</li>
+</ol>
+
+<p><b>Exemplo de entrada:</b><pr>
+</pr></p><pre>100.00
+80
+89
+</pre>
+<p><b>Exemplo de saída:</b><pr>
+</pr></p><pre>NAO SE APLICA
+</pre>
+
+<p><b>Exemplo de entrada:</b><pr>
+</pr></p><pre>100.00
+30
+90
+</pre>
+<p><b>Exemplo de saída:</b><pr>
+</pr></p><pre>R$ 150.00
+</pre>
+        </div><!-- description-display-box -->
+        <a name="JQ24"></a>
+        <p><b>Peso:</b> 1</p>
+            <form method="POST" action="https://dredd.dac.ufla.br/testTrials.php" class="comBorda" enctype="multipart/form-data">
+                <label style="background: #F9F9F9">Nova Resposta:</label>
+                <p style="margin-top: -0.3em">Selecione o arquivo com o código fonte do programa que resolve o problema para enviá-lo.</p>
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                <input type="hidden" name="id_prova" value="1668">
+                <input type="hidden" name="tst_password" value="6094cac7e083e41ce519194bfe33a50c83b9e56b">
+                <input type="hidden" name="id_problema" value="1555">
+                <input type="hidden" name="idUsuario" value="6381">
+                <input type="hidden" name="nroTentativa" value="1">
+                <input type="hidden" name="atenuacao" value="1">
+                <input type="hidden" name="nroQuestao" value="24">
+                <input type="hidden" name="_action" value="save">
+                <input type="submit" name="avaliar" value="Enviar Resposta" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+            </form>
+    </div><!-- problem-try-ct -->
+    <div style="clear: both"></div>
+</div><!-- problem-try-ct -->
+</div><!-- prova -->
+<script type="text/javascript">
+    var serverTime = 1670463892000;
+    var localTime = +Date.now();
+    var timeDiff = serverTime - localTime;
+    var closingTime = 1670922000000;
+    var nomeUsuario = "João Lucas Pereira de Almeida";
+    $('#usuario').text(nomeUsuario);
+    if (true) {
+        setInterval(function () {
+            var realtime = +Date.now() + timeDiff;
+            var minutosRestantes = (closingTime - realtime) / 60000;
+            if (minutosRestantes < 0)
+                window.location = 'testTrials.php?encerrar';
+            else if (minutosRestantes < 5)
+                minutosRestantes = minutosRestantes.toFixed(1)
+            else
+                minutosRestantes = minutosRestantes.toFixed(0);
+            $('#clock').text(minutosRestantes);
+        }, 5000);
+    }
+    else
+        $('#clock').text('ENCERRADO');
+    //window.onclose = function() {alert("Close window?");}
+</script>
+        <br>
+        </div><!--content-->
+        <div id="bottomct" class="ui-corner-top">
+            <div id="footer">
+                <table boder="0" style="width: 100%;">
+                    <tbody><tr>
+                        <td style="width:33%;">
+                            <a href="http://www.ufla.br/" style="float:left;">
+                                <img src="./Dredd - Juiz Online_files/ufla.png" width="92" height="40">
+                            </a>
+                        </td>
+                        <td style="width:34%;text-align: center;">
+Desenvolvido por <a href="https://bruno.dac.ufla.br/" style="color: #DDF">Bruno Schneider</a>
+a partir do programa original (Algod) de Renato R. R. de Oliveira.
+                        </td>
+                        <td style="width:33%;">
+                            <a href="https://www.dac.ufla.br/">
+                                <img src="./Dredd - Juiz Online_files/logo-dcc.png" style="float:right" width="128" height="40">
+                            </a>
+                        </td>
+                    </tr>
+                </tbody></table>
+            </div><!--footer-->
+        </div><!--bottomct-->
+    <!--contentct-->
+
+
+<div style="display: none" class="ubey-RecordingScreen-count-down ubey-RecordingScreen-count-down-container">
+    <style>
+        .ubey-RecordingScreen-count-down-container {
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+            top: 0;
+            left: 0;
+            z-index: 9999999999999;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .ubey-RecordingScreen-count-down-content {
+            position: absolute;
+            display: flex;
+            top: 50%;
+            left: 50%;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            height: 15em;
+            width: 15em;
+            transform: translate(-50%, -100%);
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+        }
+
+        #ubey-RecordingScreen-count-count {
+            font-size: 14em;
+            transform: translateY(-2%);
+        }
+    </style>
+    <div class="ubey-RecordingScreen-count-down-content">
+        <span id="ubey-RecordingScreen-count-count"></span>
+    </div>
+</div></body></html>
